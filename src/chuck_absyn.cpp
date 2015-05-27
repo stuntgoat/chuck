@@ -117,7 +117,7 @@ a_Stmt_List append_stmt_list( a_Stmt_List stmt_list, a_Stmt stmt, int pos )
   while (1)
     {
       current = stmt_list->next;
-      if (current == NULL) {
+      if (current->next == NULL) {
         current->next = a;
         current->linepos = pos;
         break;
@@ -330,7 +330,7 @@ a_Exp append_expression( a_Exp list, a_Exp exp, int pos )
   while (1)
     {
       current = exp->next;
-      if (current == NULL) {
+      if (current->next == NULL) {
         current->next = exp;
         break;
       } else {
@@ -689,7 +689,7 @@ a_Var_Decl_List append_var_decl_list( a_Var_Decl_List list, a_Var_Decl var_decl,
   while (1)
     {
       current = list->next;
-      if (current == NULL) {
+      if (current->next == NULL) {
         current->next = a;
         break;
       } else {
@@ -739,7 +739,7 @@ a_Arg_List prepend_arg_list( a_Type_Decl type_decl, a_Var_Decl var_decl,
 
     return a;
 }
-a_Arg_List append_arg_list(a_Type_Decl type_decl, a_Var_Decl var_decl, a_Arg_List arg_list, int pos)
+a_Arg_List append_arg_list(a_Arg_List arg_list, a_Type_Decl type_decl, a_Var_Decl var_decl, int pos)
 {
   a_Arg_List a = new_arg_list( type_decl, var_decl, pos );
   a_Arg_List current;
@@ -747,8 +747,9 @@ a_Arg_List append_arg_list(a_Type_Decl type_decl, a_Var_Decl var_decl, a_Arg_Lis
   while (1)
     {
       current = arg_list->next;
-      if (current == NULL) {
+      if (current->next == NULL) {
         current->next = a;
+        current->linepos = pos;
         break;
       } else {
         current = current->next;
@@ -822,7 +823,7 @@ a_Class_Body prepend_class_body( a_Section section, a_Class_Body body, int pos )
 //   while (1)
 //     {
 //       current = &(body->next;
-//       if (current == NULL) {
+//       if (current->next == NULL) {
 //         current->next = &a;
 //         current->linepos = pos;
 //         break;
@@ -860,6 +861,24 @@ a_Id_List prepend_id_list( c_constr xid, a_Id_List list, int pos )
     a->linepos = pos;
 
     return a;
+}
+
+a_Id_List append_id_list( a_Id_List list, c_constr xid, int pos )
+{
+    a_Id_List a = new_id_list( xid, pos );
+    a_Id_List current;
+    while (1)
+    {
+      current = list->next;
+      if (current->next == NULL) {
+        current->next = a;
+        current->linepos = pos;
+        break;
+      } else {
+        current = current->next;
+      }
+    }
+    return list;
 }
 
 void clean_exp( a_Exp exp )
@@ -938,7 +957,7 @@ error:
     return a;
 }
 
-a_Array_Sub append_array_sub( a_Exp exp, a_Array_Sub a, int pos )
+a_Array_Sub append_array_sub( a_Array_Sub a, a_Exp exp, int pos )
 {
     // if already error
     if( a->err_num ) goto error;

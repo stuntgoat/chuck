@@ -5648,7 +5648,8 @@ a_Arg_List make_dll_arg_list( Chuck_DL_Func * dl_fun )
         var_decl = new_var_decl( (char *)arg->name.c_str(), array_sub, 0 );
 
         // make new arg
-        arg_list = prepend_arg_list(type_decl, var_decl, arg_list, 0 );
+	arg_list = append_arg_list( arg_list, type_decl, var_decl, 0 );
+        //arg_list = prepend_arg_list(type_decl, var_decl, arg_list, 0 );
     }
 
     return arg_list;

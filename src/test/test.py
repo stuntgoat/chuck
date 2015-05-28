@@ -52,7 +52,7 @@ def fail(testName, output):
 
 ###
 
-exe = 'chuck'
+exe = '/Users/music/src/chuck_stuntgoat/src/chuck'
 test_dir = '.'
 
 if len(sys.argv) >= 2:

@@ -55,10 +55,24 @@ a_Program prepend_program( a_Section section, a_Program program, int pos )
 a_Program append_program( a_Program program, a_Section section, int pos )
 {
     a_Program a = new_program( section, pos );
-    a->next = program;
-    a->linepos = pos;
-
-    return a;
+    a_Program current;
+    
+    current = program->next;
+    if (current == NULL) {
+      program->next = a;
+      return program;
+    }
+  
+    while (1)
+      {
+	if (current->next == NULL) {
+	  current->next = a;
+	  break;
+	} else {
+	  current = current->next;
+	}
+      }
+    return program;
 }
 
 a_Section new_section_stmt( a_Stmt_List list, int pos )
@@ -332,9 +346,14 @@ a_Exp prepend_expression( a_Exp exp, a_Exp list, int pos )
 a_Exp append_expression( a_Exp list, a_Exp exp, int pos )
 {
   a_Exp current;
+  current = list->next;
+  if (current == NULL) {
+    list->next = exp;
+    return list;
+  }
+
   while (1)
     {
-      current = exp->next;
       if (current->next == NULL) {
         current->next = exp;
         break;
@@ -691,9 +710,16 @@ a_Var_Decl_List append_var_decl_list( a_Var_Decl_List list, a_Var_Decl var_decl,
 {
   a_Var_Decl_List a = new_var_decl_list( var_decl, pos );
   a_Var_Decl_List current;
+
+  current = list->next;
+
+  if (current == NULL) {
+    list->next = a;
+    return list;
+  }
+
   while (1)
     {
-      current = list->next;
       if (current->next == NULL) {
         current->next = a;
         break;
@@ -744,25 +770,28 @@ a_Arg_List prepend_arg_list( a_Type_Decl type_decl, a_Var_Decl var_decl,
 
     return a;
 }
-// a_Arg_List append_arg_list(a_Arg_List arg_list, a_Type_Decl type_decl, a_Var_Decl var_decl, int pos)
-// {
-//   a_Arg_List a = new_arg_list( type_decl, var_decl, pos );
-//   a_Arg_List current;
+a_Arg_List append_arg_list(a_Arg_List arg_list, a_Type_Decl type_decl, a_Var_Decl var_decl, int pos)
+{
+  a_Arg_List a = new_arg_list( type_decl, var_decl, pos );
+  a_Arg_List current;
+  current = arg_list->next;
 
-//   while (1)
-//     {
-//       current = arg_list->next;
-//       if (current->next == NULL) {
-// 	a->linepos = pos;
-//         current->next = a;
-//         // current->linepos = pos;
-//         break;
-//       } else {
-//         current = current->next;
-//       }
-//     }
-//     return arg_list;
-// }
+  if (current == NULL) {
+    arg_list->next = a;
+    return arg_list;
+  }
+
+  while (1)
+    {
+      if (current->next == NULL) {
+        current->next = a;
+        break;
+      } else {
+        current = current->next;
+      }
+    }
+    return arg_list;
+}
 
 
 a_Func_Def new_func_def( ae_Keyword func_decl, ae_Keyword static_decl,
@@ -822,23 +851,29 @@ a_Class_Body prepend_class_body( a_Section section, a_Class_Body body, int pos )
 
     return a;
 }
-// a_Class_Body append_class_body( a_Class_Body body, a_Section section, int pos )
-// {
-//   a_Class_Body a = new_class_body( section, pos );
-//   a_Section current;
-//   while (1)
-//     {
-//       current = &(body->next;
-//       if (current->next == NULL) {
-//         current->next = &a;
-//         current->linepos = pos;
-//         break;
-//       } else {
-//         current = &(current->next);
-//       }
-//     }
-//     return body;
-// }
+
+a_Class_Body append_class_body( a_Class_Body body, a_Section section, int pos )
+{
+  a_Class_Body a = new_class_body( section, pos );
+  a_Class_Body current;
+
+  current = body->next;
+  if (current == NULL) {
+    body->next = a;
+    return body;
+  }
+
+  while (1)
+    {
+      if (current->next == NULL) {
+        current->next = a;
+        break;
+      } else {
+        current = current->next;
+      }
+    }
+    return body;
+}
 
 a_Class_Ext new_class_ext( a_Id_List extend_id, a_Id_List impl_list, int pos )
 {
@@ -873,12 +908,17 @@ a_Id_List append_id_list( a_Id_List list, c_constr xid, int pos )
 {
     a_Id_List a = new_id_list( xid, pos );
     a_Id_List current;
+
+    current = list->next;
+    if (current == NULL) {
+      list->next = a;
+      return list;
+    }
+
     while (1)
     {
-      current = list->next;
       if (current->next == NULL) {
         current->next = a;
-        current->linepos = pos;
         break;
       } else {
         current = current->next;

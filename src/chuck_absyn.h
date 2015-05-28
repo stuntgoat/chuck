@@ -185,7 +185,7 @@ a_Type_Decl new_type_decl( a_Id_List xid, int ref, int pos );
 a_Type_Decl add_type_decl_array( a_Type_Decl type_decl, a_Array_Sub array, int pos );
 a_Arg_List new_arg_list( a_Type_Decl type_decl, a_Var_Decl var_decl, int pos );
 a_Arg_List prepend_arg_list(a_Type_Decl type_decl, a_Var_Decl var_decl, a_Arg_List arg_list, int pos );
-  // a_Arg_List append_arg_list( a_Arg_List arg_list, a_Type_Decl type_decl, a_Var_Decl var_decl, int pos );
+a_Arg_List append_arg_list( a_Arg_List arg_list, a_Type_Decl type_decl, a_Var_Decl var_decl, int pos );
 a_Array_Sub new_array_sub( a_Exp exp, int pos );
 a_Array_Sub prepend_array_sub( a_Array_Sub array, a_Exp exp, int pos );
 a_Array_Sub append_array_sub( a_Array_Sub array, a_Exp exp, int pos );

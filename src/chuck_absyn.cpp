@@ -125,7 +125,7 @@ a_Stmt_List append_stmt_list( a_Stmt_List stmt_list, a_Stmt stmt, int pos )
         current = current->next;
       }
     }
-  return stmt_list;
+  return a;
 }
 
 

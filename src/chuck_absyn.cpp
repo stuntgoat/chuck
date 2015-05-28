@@ -739,25 +739,25 @@ a_Arg_List prepend_arg_list( a_Type_Decl type_decl, a_Var_Decl var_decl,
 
     return a;
 }
-a_Arg_List append_arg_list(a_Arg_List arg_list, a_Type_Decl type_decl, a_Var_Decl var_decl, int pos)
-{
-  a_Arg_List a = new_arg_list( type_decl, var_decl, pos );
-  a_Arg_List current;
+// a_Arg_List append_arg_list(a_Arg_List arg_list, a_Type_Decl type_decl, a_Var_Decl var_decl, int pos)
+// {
+//   a_Arg_List a = new_arg_list( type_decl, var_decl, pos );
+//   a_Arg_List current;
 
-  while (1)
-    {
-      current = arg_list->next;
-      if (current->next == NULL) {
-	a->linepos = pos;
-        current->next = a;
-        // current->linepos = pos;
-        break;
-      } else {
-        current = current->next;
-      }
-    }
-    return arg_list;
-}
+//   while (1)
+//     {
+//       current = arg_list->next;
+//       if (current->next == NULL) {
+// 	a->linepos = pos;
+//         current->next = a;
+//         // current->linepos = pos;
+//         break;
+//       } else {
+//         current = current->next;
+//       }
+//     }
+//     return arg_list;
+// }
 
 
 a_Func_Def new_func_def( ae_Keyword func_decl, ae_Keyword static_decl,

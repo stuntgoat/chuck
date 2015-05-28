@@ -188,13 +188,13 @@ a_Arg_List prepend_arg_list(a_Type_Decl type_decl, a_Var_Decl var_decl, a_Arg_Li
 a_Arg_List append_arg_list( a_Arg_List arg_list, a_Type_Decl type_decl, a_Var_Decl var_decl, int pos );
 a_Array_Sub new_array_sub( a_Exp exp, int pos );
 a_Array_Sub prepend_array_sub( a_Array_Sub array, a_Exp exp, int pos );
-a_Array_Sub append_array_sub( a_Array_Sub array, a_Exp exp, int pos );
+  // a_Array_Sub append_array_sub( a_Array_Sub array, a_Exp exp, int pos );
 a_Complex new_complex( a_Exp re, int pos );
 a_Polar new_polar( a_Exp mod, int pos );
 a_Class_Def new_class_def( ae_Keyword class_decl, a_Id_List xid, a_Class_Ext ext, a_Class_Body body, int pos );
 a_Class_Body new_class_body( a_Section section, int pos );
 a_Class_Body prepend_class_body( a_Section section, a_Class_Body body, int pos );
-  //a_Class_Body append_class_body( a_Class_Body body, a_Section section, int pos );
+a_Class_Body append_class_body( a_Class_Body body, a_Section section, int pos );
 a_Class_Ext new_class_ext( a_Id_List extend_id, a_Id_List impl_list, int pos );
 a_Class_Def new_iface_def( ae_Keyword class_decl, a_Id_List xid, a_Class_Ext ext, a_Class_Body body, int pos );
 a_Id_List new_id_list( c_constr xid, int pos );

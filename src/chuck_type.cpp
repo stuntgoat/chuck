@@ -5553,7 +5553,8 @@ a_Id_List str2list( const string & path, t_CKUINT & array_depth )
                     curr[size-j-1] = s;
                 }
                 // make a new id and put in list
-                list = prepend_id_list( (char *)curr.c_str(), list, 0 );
+                // list = prepend_id_list( (char *)curr.c_str(), list, 0 );
+		list = append_id_list( list, (char *)curr.c_str(), 0 );
                 // clear
                 curr = "";
             }
@@ -5642,7 +5643,9 @@ a_Arg_List make_dll_arg_list( Chuck_DL_Func * dl_fun )
             array_sub = new_array_sub( NULL, 0 );
 
             for( int i = 1; i < array_depth; i++ )
-                array_sub = prepend_array_sub( array_sub, NULL, 0 );
+	      // NOTE: punting on append_array_sub.
+	      array_sub = prepend_array_sub( array_sub, NULL, 0 );
+
         }
 
         var_decl = new_var_decl( (char *)arg->name.c_str(), array_sub, 0 );
@@ -5862,19 +5865,23 @@ t_CKBOOL type_engine_add_dll( Chuck_Env * env, Chuck_DLL * dll, const string & d
             a_Exp exp_decl = new_exp_decl( type_decl, var_decl_list, TRUE, 0 );
             // add addr
             var_decl->addr = (void *)cl->svars[j]->static_addr;
-            // prepend exp stmt to stmt list
-            svar_decls = prepend_stmt_list( new_stmt_from_expression( exp_decl, 0 ), svar_decls, 0 );
+            // append exp stmt to stmt list
+	    svar_decls = append_stmt_list( svar_decls, new_stmt_from_expression( exp_decl, 0 ), 0 );
+            // svar_decls = prepend_stmt_list( new_stmt_from_expression( exp_decl, 0 ), svar_decls, 0 );
+	    
         }
 
         // if there are any declarations, prepend them to body
         if( svar_decls )
-            body = prepend_class_body( new_section_stmt( svar_decls, 0 ), body, 0 );
+	  body = append_class_body(  body, new_section_stmt( svar_decls, 0 ), 0 );
+	// body = prepend_class_body( new_section_stmt( svar_decls, 0 ), body, 0 );
 
         // go through funs backwards, and prepend
         for( t_CKINT k = (t_CKINT)the_funs.size() - 1; k >= 0; k-- )
         {
             // add to body
-            body = prepend_class_body( new_section_func_def( the_funs[k], 0 ), body, 0 );
+            body = append_class_body( body, new_section_func_def( the_funs[k], 0 ), 0 );
+	    // body = prepend_class_body( new_section_func_def( the_funs[k], 0 ), body, 0 );
         }
 
         // construct class

@@ -1012,43 +1012,6 @@ error:
     return a;
 }
 
-a_Array_Sub append_array_sub( a_Array_Sub a, a_Exp exp, int pos )
-{
-    // if already error
-    if( a->err_num ) goto error;
-
-    // make sure no multi
-    if( exp && exp->next )
-    {
-        a->err_num = 1;            // multi
-        a->err_pos = exp->linepos; // set error for type-checker
-        goto error;
-    }
-
-    // empty or not
-    if( (exp && !a->exp_list) || (!exp && a->exp_list) )
-    {
-        a->err_num = 2;   // partial
-        a->err_pos = pos; // set error for type-checker
-        goto error;
-    }
-
-    // prepend
-    if( exp )
-    {
-        exp->next = a->exp_list;
-        a->exp_list = exp;
-    }
-
-    // count
-    a->depth++;
-    return a;
-
-error:
-    clean_exp( exp );
-    return a;
-}
-
 a_Complex new_complex( a_Exp re, int pos )
 {
     a_Complex a = (a_Complex)checked_malloc( sizeof( struct a_Complex_ ) );

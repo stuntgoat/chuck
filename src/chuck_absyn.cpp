@@ -914,6 +914,10 @@ a_Id_List append_id_list( a_Id_List list, c_constr xid, int pos )
     a_Id_List a = new_id_list( xid, pos );
     a_Id_List current;
 
+    if (list == NULL) {
+      return a;
+    }
+
     current = list->next;
     if (current == NULL) {
       list->next = a;

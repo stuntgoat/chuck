@@ -77,7 +77,7 @@ a_Section new_section_func_def( a_Func_Def func_def, int pos )
     a->s_type = ae_section_func;
     a->func_def = func_def;
     a->linepos = pos;
-    
+
     return a;
 }
 
@@ -87,7 +87,7 @@ a_Section new_section_class_def( a_Class_Def class_def, int pos )
     a->s_type = ae_section_class;
     a->class_def = class_def;
     a->linepos = pos;
-    
+
     return a;
 }
 
@@ -135,7 +135,7 @@ a_Stmt new_stmt_from_expression( a_Exp exp, int pos )
     a->s_type = ae_stmt_exp;
     a->stmt_exp = exp;
     a->linepos = pos;
-    
+
     return a;
 }
 
@@ -232,7 +232,7 @@ a_Stmt new_stmt_from_for( a_Stmt c1, a_Stmt c2, a_Exp c3, a_Stmt body, int pos )
     a->linepos = pos;
     a->stmt_for.linepos = pos;
     a->stmt_for.self = a;
-    
+
     return a;
 }
 
@@ -291,7 +291,7 @@ a_Stmt new_stmt_from_return( a_Exp exp, int pos )
     a->linepos = pos;
     a->stmt_return.linepos = pos;
     a->stmt_return.self = a;
-    
+
     return a;
 }
 
@@ -316,7 +316,7 @@ a_Stmt new_stmt_from_case( a_Exp exp, int pos )
     a->stmt_case.linepos = pos;
     a->stmt_case.self = a;
 
-    return a;    
+    return a;
 }
 
 a_Exp prepend_expression( a_Exp exp, a_Exp list, int pos )
@@ -351,7 +351,7 @@ a_Exp new_exp_from_binary( a_Exp lhs, ae_Operator oper, a_Exp rhs, int pos )
     a->linepos = pos;
     a->binary.linepos = pos;
     a->binary.self = a;
-    
+
     return a;
 }
 
@@ -365,11 +365,11 @@ a_Exp new_exp_from_unary( ae_Operator oper, a_Exp exp, int pos )
     a->linepos = pos;
     a->unary.linepos = pos;
     a->unary.self = a;
-    
+
     return a;
 }
 
-a_Exp new_exp_from_unary2( ae_Operator oper, a_Type_Decl type, 
+a_Exp new_exp_from_unary2( ae_Operator oper, a_Type_Decl type,
                            a_Array_Sub array, int pos )
 {
     a_Exp a = (a_Exp)checked_malloc( sizeof( struct a_Exp_ ) );
@@ -381,7 +381,7 @@ a_Exp new_exp_from_unary2( ae_Operator oper, a_Type_Decl type,
     a->linepos = pos;
     a->unary.linepos = pos;
     a->unary.self = a;
-    
+
     return a;
 }
 
@@ -395,7 +395,7 @@ a_Exp new_exp_from_unary3( ae_Operator oper, a_Stmt code, int pos )
     a->linepos = pos;
     a->unary.linepos = pos;
     a->unary.self = a;
-    
+
     return a;
 }
 
@@ -409,7 +409,7 @@ a_Exp new_exp_from_cast( a_Type_Decl type, a_Exp exp, int pos )
     a->linepos = pos;
     a->cast.linepos = pos;
     a->cast.self = a;
-    
+
     return a;
 }
 
@@ -494,7 +494,7 @@ a_Exp new_exp_from_id( c_str xid, int pos )
     a->primary.linepos = pos;
     a->primary.self = a;
 
-    return a;    
+    return a;
 }
 
 a_Exp new_exp_from_int( long num, int pos )
@@ -507,7 +507,7 @@ a_Exp new_exp_from_int( long num, int pos )
     a->linepos = pos;
     a->primary.linepos = pos;
     a->primary.self = a;
-    
+
     return a;
 }
 
@@ -535,7 +535,7 @@ a_Exp new_exp_from_str( c_str str, int pos )
     a->linepos = pos;
     a->primary.linepos = pos;
     a->primary.self = a;
-    
+
     return a;
 }
 
@@ -549,7 +549,7 @@ a_Exp new_exp_from_char( c_str chr, int pos )
     a->linepos = pos;
     a->primary.linepos = pos;
     a->primary.self = a;
-    
+
     return a;
 }
 
@@ -571,7 +571,7 @@ a_Exp new_exp_from_if( a_Exp cond, a_Exp if_exp, a_Exp else_exp, int pos )
 {
     a_Exp a = (a_Exp)checked_malloc( sizeof( struct a_Exp_ ) );
     a->s_type = ae_exp_if;
-    a->s_meta = ( ( if_exp->s_meta == ae_meta_var && 
+    a->s_meta = ( ( if_exp->s_meta == ae_meta_var &&
         else_exp->s_meta == ae_meta_var ) ? ae_meta_var : ae_meta_value );
     a->exp_if.cond = cond;
     a->exp_if.if_exp = if_exp;
@@ -661,17 +661,17 @@ a_Var_Decl new_var_decl( c_constr xid, a_Array_Sub array, int pos )
     a->xid = insert_symbol(xid);
     a->array = array;
     a->linepos = pos;
-    
+
     return a;
 }
 
 a_Var_Decl_List new_var_decl_list( a_Var_Decl var_decl, int pos )
 {
-    a_Var_Decl_List a = (a_Var_Decl_List)checked_malloc( 
+    a_Var_Decl_List a = (a_Var_Decl_List)checked_malloc(
         sizeof( struct a_Var_Decl_List_ ) );
     a->var_decl = var_decl;
     a->linepos = pos;
-    
+
     return a;
 }
 
@@ -714,7 +714,7 @@ a_Type_Decl add_type_decl_array( a_Type_Decl a, a_Array_Sub array, int pos )
 {
     assert( a->array == NULL );
     a->array = array;
-    
+
     return a;
 }
 
@@ -730,7 +730,7 @@ a_Arg_List new_arg_list( a_Type_Decl type_decl, a_Var_Decl var_decl, int pos )
     return a;
 }
 
-a_Arg_List prepend_arg_list( a_Type_Decl type_decl, a_Var_Decl var_decl, 
+a_Arg_List prepend_arg_list( a_Type_Decl type_decl, a_Var_Decl var_decl,
                              a_Arg_List arg_list, int pos )
 {
     a_Arg_List a = new_arg_list( type_decl, var_decl, pos );
@@ -748,8 +748,9 @@ a_Arg_List append_arg_list(a_Arg_List arg_list, a_Type_Decl type_decl, a_Var_Dec
     {
       current = arg_list->next;
       if (current->next == NULL) {
+	a->linepos = pos;
         current->next = a;
-        current->linepos = pos;
+        // current->linepos = pos;
         break;
       } else {
         current = current->next;
@@ -777,7 +778,7 @@ a_Func_Def new_func_def( ae_Keyword func_decl, ae_Keyword static_decl,
     return a;
 }
 
-a_Class_Def new_class_def( ae_Keyword class_decl, a_Id_List name, 
+a_Class_Def new_class_def( ae_Keyword class_decl, a_Id_List name,
                            a_Class_Ext ext, a_Class_Body body, int pos )
 {
     a_Class_Def a = (a_Class_Def)checked_malloc( sizeof( struct a_Class_Def_ ) );
@@ -795,7 +796,7 @@ a_Class_Def new_iface_def( ae_Keyword class_decl, a_Id_List name,
 {
     a_Class_Def a = new_class_def( class_decl, name, ext, body, pos );
     a->iface = 1;
-    
+
     return a;
 }
 
@@ -885,7 +886,7 @@ void clean_exp( a_Exp exp )
 {
     if( !exp ) return;
     clean_exp( exp->next );
-    free( exp );    
+    free( exp );
 }
 
 a_Array_Sub new_array_sub( a_Exp exp, int pos )
@@ -894,7 +895,7 @@ a_Array_Sub new_array_sub( a_Exp exp, int pos )
     a->exp_list = exp;
     a->depth = 1;
     a->linepos = pos;
-    
+
     // make sure no multi
     /* if( exp && exp->next )
     {
@@ -911,9 +912,9 @@ a_Array_Sub new_array_sub( a_Exp exp, int pos )
             goto error;
         }
     } */
-    
+
     return a;
-    
+
 /* error:
     clean_exp( exp );
     a->exp_list = NULL;
@@ -977,18 +978,18 @@ a_Array_Sub append_array_sub( a_Array_Sub a, a_Exp exp, int pos )
         a->err_pos = pos; // set error for type-checker
         goto error;
     }
-    
+
     // prepend
     if( exp )
     {
         exp->next = a->exp_list;
         a->exp_list = exp;
     }
-    
+
     // count
     a->depth++;
     return a;
-    
+
 error:
     clean_exp( exp );
     return a;
@@ -1000,7 +1001,7 @@ a_Complex new_complex( a_Exp re, int pos )
     a->re = re;
     if( re ) a->im = re->next;
     a->linepos = pos;
-    
+
     return a;
 }
 
@@ -1010,7 +1011,7 @@ a_Polar new_polar( a_Exp mod, int pos )
     a->mod = mod;
     if( mod ) a->phase = mod->next;
     a->linepos = pos;
-    
+
     return a;
 }
 

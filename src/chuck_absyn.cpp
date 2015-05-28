@@ -774,6 +774,11 @@ a_Arg_List append_arg_list(a_Arg_List arg_list, a_Type_Decl type_decl, a_Var_Dec
 {
   a_Arg_List a = new_arg_list( type_decl, var_decl, pos );
   a_Arg_List current;
+
+  if (arg_list == NULL) {
+    return a;
+  }
+
   current = arg_list->next;
 
   if (current == NULL) {

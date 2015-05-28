@@ -114,18 +114,23 @@ a_Stmt_List append_stmt_list( a_Stmt_List stmt_list, a_Stmt stmt, int pos )
 {
   a_Stmt_List a = new_stmt_list( stmt, pos );
   a_Stmt_List current;
+
+  current = stmt_list->next;
+  if (current == NULL) {
+    stmt_list->next = a;
+    return stmt_list;
+  }
+  
   while (1)
     {
-      current = stmt_list->next;
       if (current->next == NULL) {
-        current->next = a;
-        current->linepos = pos;
+	current->next = a;
         break;
       } else {
         current = current->next;
       }
     }
-  return a;
+  return stmt_list;
 }
 
 

@@ -62,7 +62,7 @@ a_Program g_program = NULL;
     int ival;
     double fval;
     c_str sval;
-    
+
     a_Program program;
     a_Section program_section;
     a_Stmt_List stmt_list;
@@ -109,7 +109,7 @@ a_Program g_program = NULL;
   SHIFT_RIGHT SHIFT_LEFT TILDA CHUCK
   COLONCOLON S_CHUCK AT_CHUCK LEFT_S_CHUCK
   UNCHUCK UPCHUCK CLASS INTERFACE EXTENDS IMPLEMENTS
-  PUBLIC PROTECTED PRIVATE STATIC ABSTRACT CONST 
+  PUBLIC PROTECTED PRIVATE STATIC ABSTRACT CONST
   SPORK ARROW_RIGHT ARROW_LEFT L_HACK R_HACK
 
 
@@ -121,7 +121,7 @@ a_Program g_program = NULL;
 %type <class_body> class_body
 %type <class_body> class_body2
 %type <class_ext> class_ext
-%type <ival> class_decl 
+%type <ival> class_decl
 %type <class_ext> iface_ext
 %type <program_section> class_section
 %type <stmt_list> statement_list
@@ -180,7 +180,7 @@ program
         | program program_section           { $$ = g_program = append_program( $1, $2, EM_lineNum ); }
         // | program_section program           { $$ = g_program = prepend_program( $1, $2, EM_lineNum ); }
         ;
-        
+
 program_section
         : statement_list                    { $$ = new_section_stmt( $1, EM_lineNum ); }
         | function_definition               { $$ = new_section_func_def( $1, EM_lineNum ); }
@@ -190,7 +190,7 @@ program_section
 class_definition
         : class_decl CLASS id_list LBRACE class_body RBRACE
             { $$ = new_class_def( $1, $3, NULL, $5, EM_lineNum ); }
-        | class_decl CLASS id_list class_ext LBRACE class_body RBRACE 
+        | class_decl CLASS id_list class_ext LBRACE class_body RBRACE
             { $$ = new_class_def( $1, $3, $4, $6, EM_lineNum ); }
         | class_decl INTERFACE id_list LBRACE class_body RBRACE
             { $$ = new_iface_def( $1, $3, NULL, $5, EM_lineNum ); }
@@ -297,8 +297,9 @@ type_decl2
 
 arg_list
         : type_decl var_decl                { $$ = new_arg_list( $1, $2, EM_lineNum ); }
-        | arg_list COMMA type_decl var_decl { $$ = append_arg_list( $1, $3, $4, EM_lineNum ); }
-        // | type_decl var_decl COMMA arg_list { $$ = prepend_arg_list( $1, $2, $4, EM_lineNum ); }
+        | type_decl var_decl COMMA arg_list { $$ = prepend_arg_list( $1, $2, $4, EM_lineNum ); }
+//| arg_list COMMA type_decl var_decl { $$ = append_arg_list( $1, $3, $4, EM_lineNum ); }
+        
         ;
 
 statement_list
@@ -306,7 +307,7 @@ statement_list
         | statement_list statement          { $$ = append_stmt_list( $1, $2, EM_lineNum ); }
         // | statement statement_list          { $$ = prepend_stmt_list( $1, $2, EM_lineNum ); }
         ;
-        
+
 statement
         : expression_statement              { $$ = $1; }
         | loop_statement                    { $$ = $1; }
@@ -329,7 +330,7 @@ selection_statement
         | IF LPAREN expression RPAREN statement ELSE statement
             { $$ = new_stmt_from_if( $3, $5, $7, EM_lineNum ); }
         ;
-        
+
 loop_statement
         : WHILE LPAREN expression RPAREN statement
             { $$ = new_stmt_from_while( $3, $5, EM_lineNum ); }
@@ -455,25 +456,25 @@ logical_and_expression
         | logical_and_expression AND inclusive_or_expression
             { $$ = new_exp_from_binary( $1, ae_op_and, $3, EM_lineNum ); }
         ;
-        
+
 inclusive_or_expression
         : exclusive_or_expression           { $$ = $1; }
         | inclusive_or_expression S_OR exclusive_or_expression
             { $$ = new_exp_from_binary( $1, ae_op_s_or, $3, EM_lineNum ); }
         ;
-        
+
 exclusive_or_expression
         : and_expression                    { $$ = $1; }
         | exclusive_or_expression S_XOR and_expression
             { $$ = new_exp_from_binary( $1, ae_op_s_xor, $3, EM_lineNum ); }
         ;
-        
+
 and_expression
         : equality_expression               { $$ = $1; }
         | and_expression S_AND equality_expression
             { $$ = new_exp_from_binary( $1, ae_op_s_and, $3, EM_lineNum ); }
         ;
-        
+
 equality_expression
         : relational_expression             { $$ = $1; }
         | equality_expression EQ relational_expression
@@ -525,13 +526,13 @@ tilda_expression
         | tilda_expression TILDA cast_expression
             { $$ = new_exp_from_binary( $1, ae_op_tilda, $3, EM_lineNum ); }
         ;
-        
+
 cast_expression
         : unary_expression                  { $$ = $1; }
         | cast_expression DOLLAR type_decl
             { $$ = new_exp_from_cast( $3, $1, EM_lineNum ); }
         ;
-        
+
 unary_expression
         : dur_expression                    { $$ = $1; }
         | PLUSPLUS unary_expression
@@ -567,7 +568,7 @@ dur_expression
         | dur_expression COLONCOLON postfix_expression
             { $$ = new_exp_from_dur( $1, $3, EM_lineNum ); }
         ;
-            
+
 postfix_expression
         : primary_expression                { $$ = $1; }
         | postfix_expression array_exp

@@ -84,7 +84,7 @@ a_Program g_program = NULL;
 
 // expect 38 shift/reduce conflicts
 // 1.3.3.0: changed to 38 for char literal - spencer
-%expect 77
+%expect 73
 
 %token <sval> ID STRING_LIT CHAR_LIT
 %token <ival> NUM
@@ -229,14 +229,15 @@ iface_ext
 
 id_list
         : ID                                { $$ = new_id_list( $1, EM_lineNum ); }
-        | id_list COMMA ID                  { $$ = append_id_list( $1, $3, EM_lineNum ); }
-        // | ID COMMA id_list                  { $$ = prepend_id_list( $1, $3, EM_lineNum ); }
+        | ID COMMA id_list                  { $$ = prepend_id_list( $1, $3, EM_lineNum ); }
+//| id_list COMMA ID                  { $$ = append_id_list( $1, $3, EM_lineNum ); }
         ;
 
 id_dot
         : ID                                { $$ = new_id_list( $1, EM_lineNum ); }
-        | id_dot DOT ID                      { $$ = append_id_list( $1, $3, EM_lineNum ); }
-        // | ID DOT id_dot                     { $$ = prepend_id_list( $1, $3, EM_lineNum ); }
+        | ID DOT id_dot                     { $$ = prepend_id_list( $1, $3, EM_lineNum ); }
+// | id_dot DOT ID                      { $$ = append_id_list( $1, $3, EM_lineNum ); }
+
         ;
 
 function_definition
@@ -297,8 +298,9 @@ type_decl2
 
 arg_list
         : type_decl var_decl                { $$ = new_arg_list( $1, $2, EM_lineNum ); }
-        | arg_list COMMA type_decl var_decl { $$ = append_arg_list( $1, $3, $4, EM_lineNum ); }
-// | type_decl var_decl COMMA arg_list { $$ = prepend_arg_list( $1, $2, $4, EM_lineNum ); }
+        | type_decl var_decl COMMA arg_list { $$ = prepend_arg_list( $1, $2, $4, EM_lineNum ); }
+// | arg_list COMMA type_decl var_decl { $$ = append_arg_list( $1, $3, $4, EM_lineNum ); }
+
 
         
         ;
@@ -379,15 +381,16 @@ arrow_expression
 
 array_exp
         : LBRACK expression RBRACK          { $$ = new_array_sub( $2, EM_lineNum ); }
-        | array_exp LBRACK expression RBRACK  { $$ = append_array_sub( $1, $3, EM_lineNum ); }
-//| LBRACK expression RBRACK array_exp { $$ = prepend_array_sub( $4, $2, EM_lineNum ); }
+        | LBRACK expression RBRACK array_exp { $$ = prepend_array_sub( $4, $2, EM_lineNum ); }
+//| array_exp LBRACK expression RBRACK  { $$ = append_array_sub( $1, $3, EM_lineNum ); }
+
   
         
         ;
 
 array_empty
         : LBRACK RBRACK                     { $$ = new_array_sub( NULL, EM_lineNum ); }
-        | array_empty LBRACK RBRACK         { $$ = append_array_sub( $1, NULL, EM_lineNum ); }
+        | array_empty LBRACK RBRACK         { $$ = prepend_array_sub( $1, NULL, EM_lineNum ); }
         ;
 
 decl_expression
@@ -400,8 +403,8 @@ decl_expression
 
 var_decl_list
         : var_decl                          { $$ = new_var_decl_list( $1, EM_lineNum ); }
-        | var_decl_list COMMA var_decl      { $$ = append_var_decl_list( $1, $3, EM_lineNum ); }
-        // | var_decl COMMA var_decl_list      { $$ = prepend_var_decl_list( $1, $3, EM_lineNum ); }
+        // | var_decl_list COMMA var_decl      { $$ = append_var_decl_list( $1, $3, EM_lineNum ); }
+        | var_decl COMMA var_decl_list      { $$ = prepend_var_decl_list( $1, $3, EM_lineNum ); }
         ;
 
 var_decl

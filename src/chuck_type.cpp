@@ -5550,8 +5550,8 @@ a_Id_List str2list( const string & path, t_CKUINT & array_depth )
                     curr[size-j-1] = s;
                 }
                 // make a new id and put in list
-                // list = prepend_id_list( (char *)curr.c_str(), list, 0 );
-		list = append_id_list( list, (char *)curr.c_str(), 0 );
+                list = prepend_id_list( (char *)curr.c_str(), list, 0 );
+		// list = append_id_list( list, (char *)curr.c_str(), 0 );
                 // clear
                 curr = "";
             }
@@ -5640,16 +5640,17 @@ a_Arg_List make_dll_arg_list( Chuck_DL_Func * dl_fun )
             array_sub = new_array_sub( NULL, 0 );
 
             for( int i = 1; i < array_depth; i++ )
-	      array_sub = append_array_sub( array_sub, NULL,0 );
-	    // array_sub = prepend_array_sub( array_sub, NULL, 0 );
+	      array_sub = prepend_array_sub( array_sub, NULL, 0 );
+	      //array_sub = append_array_sub( array_sub, NULL,0 );
+	      
 
         }
 
         var_decl = new_var_decl( (char *)arg->name.c_str(), array_sub, 0 );
 
         // make new arg
-	arg_list = append_arg_list( arg_list, type_decl, var_decl, 0 );
-        //arg_list = prepend_arg_list(type_decl, var_decl, arg_list, 0 );
+	//arg_list = append_arg_list( arg_list, type_decl, var_decl, 0 );
+        arg_list = prepend_arg_list(type_decl, var_decl, arg_list, 0 );
     }
 
     return arg_list;
@@ -5711,8 +5712,9 @@ a_Func_Def make_dll_as_fun( Chuck_DL_Func * dl_fun, t_CKBOOL is_static )
         a_Array_Sub array_sub = new_array_sub( NULL, 0 );
 
         for( int i = 1; i < array_depth; i++ )
-	  array_sub = append_array_sub( array_sub, NULL, 0 );
-	  //array_sub = prepend_array_sub( array_sub, NULL, 0 );
+	  array_sub = prepend_array_sub( array_sub, NULL, 0 );
+	  // array_sub = append_array_sub( array_sub, NULL, 0 );
+	  
 
         type_decl = add_type_decl_array( type_decl, array_sub, 0 );
     }

@@ -361,7 +361,7 @@ a_Exp append_expression( a_Exp list, a_Exp exp, int pos )
         current = current->next;
       }
     }
-    return exp;
+    return list;
 }
 
 a_Exp new_exp_from_binary( a_Exp lhs, ae_Operator oper, a_Exp rhs, int pos )

@@ -1327,8 +1327,7 @@ t_CKBOOL type_engine_ensure_no_multi_decl( a_Exp exp, const char * op_str )
 // name: type_engine_check_op()
 // desc: ...
 //-----------------------------------------------------------------------------
-t_CKTYPE type_engine_check_op( Chuck_Env * env, ae_Operator op, a_Exp lhs, a_Exp rhs,
-                               a_Exp_Binary binary )
+t_CKTYPE type_engine_check_op( Chuck_Env * env, ae_Operator op, a_Exp lhs, a_Exp rhs, a_Exp_Binary binary )
 {
     t_CKTYPE left = lhs->type, right = rhs->type;
     assert( left && right );
@@ -3071,8 +3070,7 @@ string type_engine_print_exp_dot_member( Chuck_Env * env, a_Exp_Dot_Member membe
 // name: find_func_match_actual()
 // desc: ...
 //-----------------------------------------------------------------------------
-Chuck_Func * find_func_match_actual( Chuck_Func * up, a_Exp args,
-                                     t_CKBOOL implicit, t_CKBOOL specific )
+Chuck_Func * find_func_match_actual( Chuck_Func * up, a_Exp args, t_CKBOOL implicit, t_CKBOOL specific )
 {
     a_Exp e;
     a_Arg_List e1;
@@ -3175,8 +3173,7 @@ Chuck_Func * find_func_match( Chuck_Func * up, a_Exp args )
 // name: type_engine_check_exp_func_call()
 // desc: ...
 //-----------------------------------------------------------------------------
-t_CKTYPE type_engine_check_exp_func_call( Chuck_Env * env, a_Exp exp_func, a_Exp args,
-                                          t_CKFUNC & ck_func, int linepos )
+t_CKTYPE type_engine_check_exp_func_call( Chuck_Env * env, a_Exp exp_func, a_Exp args, t_CKFUNC & ck_func, int linepos )
 {
     Chuck_Func * func = NULL;
     Chuck_Func * up = NULL;
@@ -3216,7 +3213,7 @@ t_CKTYPE type_engine_check_exp_func_call( Chuck_Env * env, a_Exp exp_func, a_Exp
         if( exp_func->s_type == ae_exp_primary && exp_func->primary.s_type == ae_primary_var )
         {
             EM_error2( exp_func->linepos,
-                "argument type(s) do not match:" );
+                "primary: argument type(s) do not match:" );
             EM_error2( exp_func->linepos,
                 "... for function '%s(...)' ...",
                 S_name(exp_func->primary.var) );
@@ -5643,8 +5640,8 @@ a_Arg_List make_dll_arg_list( Chuck_DL_Func * dl_fun )
             array_sub = new_array_sub( NULL, 0 );
 
             for( int i = 1; i < array_depth; i++ )
-	      // NOTE: punting on append_array_sub.
-	      array_sub = prepend_array_sub( array_sub, NULL, 0 );
+	      array_sub = append_array_sub( array_sub, NULL,0 );
+	    // array_sub = prepend_array_sub( array_sub, NULL, 0 );
 
         }
 
@@ -5714,7 +5711,8 @@ a_Func_Def make_dll_as_fun( Chuck_DL_Func * dl_fun, t_CKBOOL is_static )
         a_Array_Sub array_sub = new_array_sub( NULL, 0 );
 
         for( int i = 1; i < array_depth; i++ )
-            array_sub = prepend_array_sub( array_sub, NULL, 0 );
+	  array_sub = append_array_sub( array_sub, NULL, 0 );
+	  //array_sub = prepend_array_sub( array_sub, NULL, 0 );
 
         type_decl = add_type_decl_array( type_decl, array_sub, 0 );
     }

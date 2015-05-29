@@ -188,7 +188,7 @@ a_Arg_List prepend_arg_list(a_Type_Decl type_decl, a_Var_Decl var_decl, a_Arg_Li
 a_Arg_List append_arg_list( a_Arg_List arg_list, a_Type_Decl type_decl, a_Var_Decl var_decl, int pos );
 a_Array_Sub new_array_sub( a_Exp exp, int pos );
 a_Array_Sub prepend_array_sub( a_Array_Sub array, a_Exp exp, int pos );
-  // a_Array_Sub append_array_sub( a_Array_Sub array, a_Exp exp, int pos );
+a_Array_Sub append_array_sub( a_Array_Sub array, a_Exp exp, int pos );
 a_Complex new_complex( a_Exp re, int pos );
 a_Polar new_polar( a_Exp mod, int pos );
 a_Class_Def new_class_def( ae_Keyword class_decl, a_Id_List xid, a_Class_Ext ext, a_Class_Body body, int pos );
@@ -231,8 +231,14 @@ struct a_Var_Decl_List_ { a_Var_Decl var_decl; a_Var_Decl_List next; int linepos
 struct a_Var_Decl_ { S_Symbol xid; a_Var_Decl var_decl; a_Array_Sub array; t_CKVALUE value;
                      void * addr; int linepos; a_Exp self; };
 struct a_Type_Decl_ { a_Id_List xid; a_Array_Sub array; int ref; int linepos; /*a_Exp self;*/ };
-struct a_Array_Sub_ { t_CKUINT depth; a_Exp exp_list; int linepos; a_Exp self;
-                      int err_num; int err_pos; };
+struct a_Array_Sub_ {
+  t_CKUINT depth;
+  a_Exp exp_list;
+  int linepos;
+  a_Exp self;
+  int err_num;
+  int err_pos;
+};
 struct a_Arg_List_ { a_Type_Decl type_decl; a_Var_Decl var_decl; t_CKTYPE type;
                      a_Arg_List next; int linepos; a_Exp self; };
 struct a_Complex_ { a_Exp re; a_Exp im; int linepos; a_Exp self; };
